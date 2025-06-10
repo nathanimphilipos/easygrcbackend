@@ -7,10 +7,15 @@ import traceback
 import json
 
 # ✅ Load .env file
+from dotenv import load_dotenv
+import os
+
+# Load environment variables (works locally with .env, safely skips on Render)
 load_dotenv()
-print("🔍 Manually checking .env contents:")
-with open(".env", "r") as f:
-    print(f.read())
+
+# Securely fetch the API key
+api_key = os.getenv("OPENAI_API_KEY")
+print("🔐 Loaded API Key:", api_key[:4] + "..." if api_key else "Not Found")
 
 # ✅ Print current working directory for debug purposes
 print("📂 Current working directory:", os.getcwd())
@@ -18,6 +23,10 @@ print("📂 Current working directory:", os.getcwd())
 # ✅ Print API key to confirm it's loaded (masking for safety in production)
 api_key = os.getenv("OPENAI_API_KEY")
 print("🔐 Loaded API Key:", api_key[:8] + "..." if api_key else "None")
+
+# testing
+
+
 
 # ✅ Initialize Flask app
 app = Flask(__name__, static_folder="static", template_folder="templates")
