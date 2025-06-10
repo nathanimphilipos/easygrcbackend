@@ -60,12 +60,13 @@ def generate_prompt(data):
 
     return f"""Based on the following cybersecurity risk survey, provide:
 1. A brief risk posture assessment (e.g., Low/Moderate/High Risk),
-2. The top 3 most concerning issues,
-3. Three practical mitigation recommendations, utilizing NIST, ISACA & ISO for controls,
-4. A short summary.
+2. Also include 3 bullet points of what the organization is doing well,
+3. The top 3 most concerning issues, 
+4. Three practical mitigation recommendations, utilizing NIST, ISACA & ISO for controls,
+5. A short summary.
 
 Return your response strictly as a JSON object with keys:
-'posture', 'top_risks', 'mitigations', and 'summary'.
+'posture', 'strengths', 'top_risks', 'mitigations', and 'summary'.
 
 Survey:
 {survey_summary}
@@ -81,7 +82,7 @@ def analyze_json():
         # 🧠 Prompt for scoring and visual analysis
         scoring_prompt = f"""
         You are an experienced cybersecurity GRC consultant with over 45 years in describing complex technological risks to non-technical stakeholders. 
-        You are known for your amazing communication skills — taking complex terms and making them feel simple. 
+        You are known for your amazing communication skills — taking complex terms and making them feel extremely simple. 
         Given the following organization's answers to a security risk survey:
         {data}
 
@@ -139,10 +140,13 @@ def analyze_json():
         except:
             insights = json.dumps({
                 "posture": "Unknown",
+                "strengths": [],
                 "top_risks": [],
                 "mitigations": [],
                 "summary": dashboard_content
             })
+
+            
 
         # ✅ Final combined response
         return jsonify({
