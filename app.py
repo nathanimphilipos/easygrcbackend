@@ -32,15 +32,14 @@ print("🔐 Loaded API Key:", api_key[:8] + "..." if api_key else "None")
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
 # ✅ Enable CORS for all frontend environments
+from flask_cors import CORS
+
+app = Flask(__name__)
 CORS(app, origins=[
     "https://tenagrc.com",
-    "https://www.tenagrc.com",
-    "https://tenagrc.onrender.com",
-    "https://www.tenagrc.onrender.com",
-    "https://tenagrcfrontend.onrender.com",
-    "https://d7f2-47-24-196-4.ngrok-free.app"
-    "https://eff5-47-24-196-4.ngrok-free.app"
+    "https://www.tenagrc.com"
 ])
+
 
 # ✅ Initialize OpenAI client with required project ID
 client = OpenAI(
@@ -51,7 +50,8 @@ client = OpenAI(
 # ✅ Frontend route
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return "✅ EasyGRC backend is live and accepting JSON"
+
 
 # ✅ Prompt generator for dashboard
 def generate_prompt(data):
