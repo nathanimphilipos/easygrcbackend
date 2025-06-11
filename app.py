@@ -6,7 +6,7 @@ import os
 import traceback
 import json
 
-# ✅ Load .env file
+#  Load .env file
 from dotenv import load_dotenv
 import os
 
@@ -17,10 +17,10 @@ load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 print("🔐 Loaded API Key:", api_key[:4] + "..." if api_key else "Not Found")
 
-# ✅ Print current working directory for debug purposes
+# Print current working directory for debug purposes
 print("📂 Current working directory:", os.getcwd())
 
-# ✅ Print API key to confirm it's loaded (masking for safety in production)
+# Print API key to confirm it's loaded (masking for safety in production)
 api_key = os.getenv("OPENAI_API_KEY")
 print("🔐 Loaded API Key:", api_key[:8] + "..." if api_key else "None")
 
@@ -28,10 +28,10 @@ print("🔐 Loaded API Key:", api_key[:8] + "..." if api_key else "None")
 
 
 
-# ✅ Initialize Flask app
+#  Initialize Flask app
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
-# ✅ Enable CORS for all frontend environments
+# Enable CORS for all frontend environments
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -41,13 +41,13 @@ CORS(app, origins=[
 ])
 
 
-# ✅ Initialize OpenAI client with required project ID
+#  Initialize OpenAI client with required project ID
 client = OpenAI(
     api_key=api_key,
     project="proj_SRtvvFfZT2vFJu3em1U1NAOv"
 )
 
-# ✅ Frontend route
+# Frontend route
 @app.route("/")
 def home():
     return "✅ EasyGRC backend is live and accepting JSON"
@@ -82,14 +82,14 @@ def analyze_json():
         # 🧠 Prompt for scoring and visual analysis
         scoring_prompt = f"""
         You are an experienced cybersecurity GRC consultant with over 45 years in describing complex technological risks to non-technical stakeholders. 
-        You are known for your amazing communication skills — taking complex terms and making them feel extremely simple. 
+        You are known for your amazing communication skills  taking complex terms and making them feel extremely simple. 
         Given the following organization's answers to a security risk survey:
         {data}
 
         Score their cybersecurity posture on a scale from 1 to 10 (with 10 being excellent and 1 being critical risk).
         Then, based on that score, recommend a short 1-paragraph analysis of their risk level and suggest next steps.
-        Make the explanation simple and readable, but insightful — be a harsh critic, and make it difficult to earn a high score (e.g. 8.5+).
-        Be kind in tone but clear and direct in highlighting weaknesses.
+        Make the explanation simple and readable, but insightful — be honest and realistic in your assessment, but if there is consistent monitoring (monthly or quarterly) for risks, give it a higher score. I want people to feel better about their risk posture IF it shows that they are continually dedciated to it. let the best of the best get 10/10 but be generous in handing out 8-9.5 if it seems they are consistently monitoring risks and providing trainings to staff.
+
         
         Format your response exactly like this:
         {{
